@@ -13,7 +13,7 @@
   </script>
 </head>
 <body>
-       <h3>아이디중복체크</h3>
+       <h3>아이디중복체크 </h3>
        <form action="IdCheck.do" name="frm" method="post">
        <table class="table">
          <tr>
