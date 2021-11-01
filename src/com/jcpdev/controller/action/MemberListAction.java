@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jcpdev.dao.MembersDao;
+import com.jcpdev.dao.Ps_boardDao;
 import com.jcpdev.dto.Member;
 
 public class MemberListAction implements Action {
@@ -18,8 +19,11 @@ public class MemberListAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		MembersDao dao = MembersDao.getInstance();
+		
+		Ps_boardDao pdao = Ps_boardDao.getInstance();	// 수익
+		int income = pdao.checkIncome();
+		request.setAttribute("income", income);
 		
 		Map<String,Integer> map = new HashMap<>();
 		List<Member> list = dao.selectAll(map);

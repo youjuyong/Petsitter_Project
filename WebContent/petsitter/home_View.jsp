@@ -10,24 +10,22 @@
 <meta charset="UTF-8">
 <title>펫시터 검색 페이지</title>
 <script>
-	
 	function validCheck() {
 		//1. 패스워드는 8글자 이상이어야 한다.
 		const frm = document.frmReg;
 		//1. 패스워드는 8글자 이상이어야 한다.
-		if (frm.m_addr.length >=5 ){
-		alert('주소 or 날짜를 입력해주세요.');
+		if (frm.value.length <= 2 ){
+		alert('주소를 세글자 이상 입력해주세요(xx시)');
 		frm.m_addr.focus();				// 포커스(커서) 이동 
 		return false;						//함수가 종료.
-		}else{
-		return true;
 		}
-		
 	}
-
 </script>
 <!--<link rel="stylesheet" href="../web.css?v=1"> -->
 <style>
+body{
+font-family: 'Gugi', cursive;
+}
 .div1{
 	text-align:center;
 	width:100%;
@@ -57,7 +55,6 @@
 	margin-bottom:10px;
 	text-align:center;
 }
-
 .box6{
 	margin-top:10px;
 	margin-bottom:10px;
@@ -93,78 +90,75 @@ ul.mylist , ol.mylist  {
     font-size: 12px;
     list-style:none;
 }
-
 .Main_container{
 	width: 100%;
     height: 100%;
+    
 }
-.h2{
-text-align:center;
-}
-
-.thumbnail { padding:10px 20px 10px; border:none; width:400px; text-align:center; }
-.thumbnail img{ width:100%;height: 300px; object-fit:cover; margin-bottom: 10px; border-radius: 20%;}
+.thumbnail { padding:10px 20px 10px; border:none; width:400px; text-align:center; margin-left: 53px;}
+.thumbnail img{ width:100%;;height: 300px; object-fit:cover; margin-bottom: 10px; border-radius: 20%;}
 .container {width:30%;  padding:10px; border: none; float:left; }
-
 </style>
 </head>
 <body>
+<%@ include file="../top.jsp" %>
+<br><br><br><br>
 <div class ="Main_container">
 	<form action="../Select_PetSitter.do" name="frmReg" method="post" id="frm" onsubmit="return validCheck()" >
-	<div class = "div1">
-		<div class = "box1">
-			<label>주소 :</label>
-			<input type="text" name="m_addr" placeholder="주소를 입력해주세요(ex)서울시)" >&nbsp;&nbsp; 
-			<label>날짜 :</label> 
-			<input type="date" name="wdate_start" >&nbsp;~ 
-			<input type="date" name="wdate_final" > 
-		</div>
-		<div class="box2">
-			<div>
-			<input type="checkbox" name="terms" value="반려동물없음">반려동물없음 
-			<input type="checkbox" name="terms" value="픽업가능">픽업가능 
-			<input type="checkbox" name="terms" value="대형견가능">대형견가능 
-			<input type="checkbox" name="terms" value="마당있음">마당있음
-			<input type="checkbox" name="terms" value="노견케어">노견케어
+		<div class = "div1">
+			<div class = "box1">
+				<label>주소 :</label>
+				<input type="text" name="m_addr" placeholder="주소를 입력해주세요(ex)서울)">&nbsp;&nbsp;
+				<label>날짜 :</label> 
+				<input type="date" name="wdate_start" value="s_date">&nbsp;~
+				<input type="date" name="wdate_final" value="f_date">
 			</div>
-		</div>
-		<div class="box3">
-			 <input type="submit" value="찾기"> 
-			 <input type="reset" value="다시쓰기">
-		</div>
-	</div>
-	<div style="margin:auto;"> <!-- 추가 -->
- 	<a class="button" href="${pageContext.request.contextPath }">홈으로 돌아가기 ${pageContext.request.contextPath } <!-- 추가 -->
- 	</a>&nbsp;&nbsp;&nbsp; 주소 :"${pageDto.m_addr}" 시작일 : "${pageDto.wdate_start}" 종료일 : "${pageDto.wdate_final}" 조건 : "${pageDto.terms}" 으로 검색한 지원자 : ${pageDto.totalCount } 명입니다. <!-- 추가 -->
-	</div> <!-- 추가 -->
-	<div class="box4">
-		<h2 class="h2">★펫시터 목록★</h2>
-		<div class ="box6">  
-		<c:if test="${pageDto.totalCount == null || pageDto.totalCount ==0}"> 
-					<img src = "/img/cat_select_empty.png" > 
-					<h3>펫시터를 조회해주시거나 다시 조회해주세요. </h3> 
-		</c:if>	
-		</div> 
-  		 <c:forEach var="cmt" items="${cmtlist }">
-			<div class = "container">
-				<div class = "thumbnail">
-					<a href = "ps_board_read.do?idx=${cmt.idx}&psb_idx=${cmt.psb_idx}&s_date=${s_date}&f_date=${f_date}"><img alt = "gallery" src = "/img/${cmt.g_fname}"></a>
-					<!-- /img/는 url 경로와 c:\upload 매핑이 필욯ㅂ니다 -->
-					<strong>${cmt.title}</strong>		
-				</div>
-				<div class = "box5">
-					<ul class="mylist">
-						<li>idx값 :  ${cmt.idx}</li>
-						<li>글제목 : ${cmt.title}</li>
-						<li>주소 : ${cmt.m_addr}</li>
-						<li>가능한 날짜 : ${cmt.ps_sdate} ~ ${cmt.ps_fdate }</li>
-						<li>준비 : ${cmt.terms}</li><br>
-						<li>펫시터 멘트 : ${cmt.comment}</li>		
-					</ul>
+			<div class="box2">
+				<div>
+				<input type="checkbox" name="terms" value="반려동물없음">반려동물없음 
+				<input type="checkbox" name="terms" value="픽업가능">픽업가능 
+				<input type="checkbox" name="terms" value="대형견가능">대형견가능 
+				<input type="checkbox" name="terms" value="마당있음">마당있음
+				<input type="checkbox" name="terms" value="노견케어">노견케어
 				</div>
 			</div>
-		</c:forEach>
-	</div>
+			<div class="box3">
+				 <input type="submit" value="찾기"> 
+				 <input type="reset" value="다시쓰기" >
+			</div>
+		</div>
+		<div style="margin:auto;">
+		 	<a class="button" style="font-family: 'Gugi', cursive;"href="${pageContext.request.contextPath }">홈으로 돌아가기 ${pageContext.request.contextPath }
+		 	</a>&nbsp;&nbsp;&nbsp;"${pageDto.m_addr}" 로 검색한 지원자 : ${pageDto.totalCount } 명입니다.
+		</div>
+		<div class="box4">
+			<div class="box6">
+				<h2>★펫시터 목록★</h2>
+				<c:if test="${pageDto.totalCount == null || pageDto.totalCount ==0}">
+						<img src = "/img/select_empty.png" >
+						<h3>펫시터를 조회해주시거나 다시 조회해주세요. </h3>
+				</c:if>
+			</div>
+	  		 <c:forEach var="cmt" items="${cmtlist }">
+				<div class = "container">
+					<div class = "thumbnail">
+						<a href = "ps_board_read.do?idx=${cmt.idx}&psb_idx=${cmt.psb_idx}&s_date=${s_date}&f_date=${f_date}"><img alt = "gallery" src = "/img/${cmt.g_fname}"></a>
+						<!-- /img/는 url 경로와 c:\upload 매핑이 필욯ㅂ니다 -->
+						<strong>${cmt.title}</strong>			
+					</div>
+					<div class = "box5">
+						<ul class="mylist">
+							<%-- <li>idx값 :  ${cmt.m_addr}</li> --%>
+							<li>글제목 : ${cmt.title}</li>
+							<li>주소 : ${cmt.m_addr}</li>
+							<li>가능한 날짜 : ${cmt.ps_sdate} ~ ${cmt.ps_fdate }</li>
+							<li>준비 : ${cmt.terms}</li><br>
+							<li>펫시터 멘트 : ${cmt.comment}</li>		
+						</ul>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
 	</form> 
 	<p style=clear:both;></p>
 	<c:if test="${pageDto.totalCount != null && pageDto.totalCount !=0}">
@@ -178,10 +172,10 @@ text-align:center;
       	<c:forEach var="i" begin="${pageDto.startPage}" end="${pageDto.endPage}">
          <a class="pagenum" href="?page=${i}&m_addr=${pageDto.m_addr}&wdate_start=${pageDto.wdate_start}&wdate_final=${pageDto.wdate_final}&terms=${pageDto.terms}">${i }</a>
       	</c:forEach>
-       <c:if test="${pageDto.currentPage !=pageDto.endPage }"> 
-  	     <a class="pagenum" href="?page=${pageDto.currentPage+1}&m_addr=${pageDto.m_addr}&wdate_start=${pageDto.wdate_start}&wdate_final=${pageDto.wdate_final}&terms=${pageDto.terms}">&gt;</a>   
-  	     <a class="pagenum" href="?page=${pageDto.endPage}&m_addr=${pageDto.m_addr}&wdate_start=${pageDto.wdate_start}&wdate_final=${pageDto.wdate_final}&terms=${pageDto.terms}">&gt;&gt;</a>    
-   	   </c:if>
+      <c:if test="${pageDto.currentPage !=pageDto.endPage }">
+  	     <a class="pagenum" href="?page=${pageDto.currentPage+1}&m_addr=${pageDto.m_addr}&wdate_start=${pageDto.wdate_start}&wdate_final=${pageDto.wdate_final}&terms=${pageDto.terms}">&gt;</a>
+  	     <a class="pagenum" href="?page=${pageDto.endPage}&m_addr=${pageDto.m_addr}&wdate_start=${pageDto.wdate_start}&wdate_final=${pageDto.wdate_final}&terms=${pageDto.terms}">&gt;&gt;</a>
+   	  </c:if>
 	</div>
 	</c:if>
 </div>

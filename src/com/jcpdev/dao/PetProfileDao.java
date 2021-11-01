@@ -19,6 +19,7 @@ public class PetProfileDao {
 			return dao;
 		}
 		
+
 		public void p_insert(Pet dto) {
 			SqlSession mapper = factory.openSession();
 			mapper.insert("petprofile.p_insert", dto);

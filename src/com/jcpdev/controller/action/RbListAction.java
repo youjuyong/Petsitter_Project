@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jcpdev.dao.RboardDao;
 import com.jcpdev.dto.PageDto;
-import com.jcpdev.dto.PageDto3;
+import com.jcpdev.dto.PageDto2;
 import com.jcpdev.dto.Rboard;
 
 public class RbListAction implements Action {
@@ -32,7 +32,7 @@ public class RbListAction implements Action {
 		int pageSize =15;		//ui로 변경하도록 구현할 수 있습니다.
 //		int startNo=(pageNo-1)*pageSize;
 		
-		PageDto3 pageDto = new PageDto3(pageNo,dao.getCount(),pageSize);  //페이지처리에 필요한객체(값) 생성
+		PageDto2 pageDto = new PageDto2(pageNo,dao.getCount(),pageSize);  //페이지처리에 필요한객체(값) 생성
 		
 		
 		Map<String,Integer> map = new HashMap<>();

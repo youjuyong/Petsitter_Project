@@ -31,8 +31,6 @@ public class Ps_board_readAction implements Action {
 		request.setAttribute("s_date", s_date);
 		request.setAttribute("f_date", f_date);
 		
-		System.out.println(s_date);
-		
 		List<Pet> plist = dao.p_getList(ps_idx);	// 펫시터의 펫 정보 불러오기
 		request.setAttribute("pet", plist);
 		
@@ -46,13 +44,24 @@ public class Ps_board_readAction implements Action {
 		request.setAttribute("petSitter", m_getList);
 		String ps_nick = m_getList.getNick();
 		
-		R_board rate = dao.rate(ps_nick);	// 펫시터의 평점 불러오기
-		request.setAttribute("rate", rate);
-		
-		R_board rateCnt = dao.rate(ps_nick);	// 펫시터의 후기 게시판 갯수 불러오기
+		String rateCnt = dao.rateCnt(ps_nick);	// 펫시터의 후기 게시판 갯수 불러오기
 		request.setAttribute("rateCnt", rateCnt);
 		
+		if(rateCnt != null) {
+			System.out.println("dd");
+			System.out.println("평점 : " +dao.rate(ps_nick));
+			double rate = dao.rate(ps_nick);	// 펫시터의 평점 불러오기
+			double rate1 = rate * 10;
+			rate1 = ((double)Math.round(rate1))/10;
+			request.setAttribute("rate", rate1);
+		}
+		
 		request.setAttribute("ps_idx", ps_idx);	// 펫시터 idx 넘기기
+		
+		List<R_board> r_getList = dao.r_getList(ps_nick);	// 펫시터 회원정보 불러오기
+		request.setAttribute("review", r_getList);
+		
+		
 		
 		forward.isRedirect = false;
 		forward.url = "community/ps_board_read.jsp";

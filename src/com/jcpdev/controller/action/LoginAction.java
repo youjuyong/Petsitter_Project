@@ -24,7 +24,7 @@ public class LoginAction implements Action {
 		HttpSession session = request.getSession();
 		String id=request.getParameter("id");
 		String password=request.getParameter("password");
-		
+	
 		if(session.getAttribute("readIdx") ==null){
 			StringBuilder readIdx=new StringBuilder("/");
 			session.setAttribute("readIdx",readIdx);
@@ -36,6 +36,7 @@ public class LoginAction implements Action {
 
 		MembersDao dao = MembersDao.getInstance();
 		SessionDto user = dao.login(map);
+
 		if(user!=null){
 			session.setAttribute("user", user);
 			request.setAttribute("message", "로그인 되었습니다.");

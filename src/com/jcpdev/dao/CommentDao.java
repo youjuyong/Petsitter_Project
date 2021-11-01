@@ -56,4 +56,11 @@ public class CommentDao {
 		mapper.commit();
 		mapper.close();
 	}
+	
+	public String qc_cnt(int q_idx) {
+		SqlSession mapper = factory.openSession();
+		String qc_cnt = mapper.selectOne("comment.qc_cnt", q_idx);
+		mapper.close();
+		return qc_cnt;
+	}
 }

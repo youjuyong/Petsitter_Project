@@ -53,6 +53,7 @@
     <mapper resource="com/jcpdev/mybatis/q_board.xml"/>
     <mapper resource="com/jcpdev/mybatis/rboard.xml"/>
     <mapper resource="com/jcpdev/mybatis/rbmember.xml"/>
+    <mapper resource="com/jcpdev/mybatis/members.xml"/>
     
     <!-- sql mapper 파일은 여러개 사용될 수 있습니다. -->
   </mappers>
